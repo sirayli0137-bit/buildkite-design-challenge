@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Production & Future — Build Header Triage View</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/white.css">
+  <style>
+    :root {
+      --zinc-50: #fafafa; --zinc-200: #e4e4e7; --zinc-400: #a1a1aa; --zinc-500: #71717a;
+      --zinc-700: #3f3f46; --zinc-900: #18181b;
+      --red-500: #ef4444; --red-700: #b91c1c;
+      --amber-500: #f59e0b; --amber-700: #b45309;
+      --green-500: #22c55e; --green-700: #15803d;
+    }
+    .reveal { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; color: var(--zinc-900); font-size: 26px; }
+    .reveal h1, .reveal h2, .reveal h3 { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif; color: var(--zinc-900); font-weight: 700; text-transform: none; letter-spacing: -0.01em; line-height: 1.15; margin-bottom: 0.4em; }
+    .reveal h1 { font-size: 2.4em; }
+    .reveal h2 { font-size: 1.8em; }
+    .reveal h3 { font-size: 1.2em; color: var(--zinc-500); font-weight: 600; }
+    .reveal .slides section { text-align: left; padding: 0 1em; }
+    .reveal blockquote { border-left: 4px solid var(--zinc-200); padding-left: 1em; font-style: normal; color: var(--zinc-700); box-shadow: none; width: 100%; max-width: 900px; }
+    .reveal ul, .reveal ol { margin-left: 1.2em; }
+    .reveal li { margin: 0.4em 0; line-height: 1.4; }
+    .reveal table { margin: 0.5em 0; font-size: 0.78em; border-collapse: collapse; width: 100%; }
+    .reveal table th, .reveal table td { padding: 0.5em 0.75em; border-bottom: 1px solid var(--zinc-200); text-align: left; vertical-align: top; }
+    .reveal table th { background: var(--zinc-50); font-weight: 600; color: var(--zinc-700); font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.04em; }
+    .reveal code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--zinc-50); padding: 0.1em 0.4em; border-radius: 3px; border: 1px solid var(--zinc-200); font-size: 0.85em; }
+    .reveal .muted { color: var(--zinc-500); }
+    .reveal .strong { color: var(--zinc-900); font-weight: 600; }
+    .reveal .accent { color: var(--red-700); }
+    .reveal .footer { position: fixed; bottom: 1em; right: 1.5em; font-size: 0.55em; color: var(--zinc-400); letter-spacing: 0.04em; }
+    .reveal .deck-number { position: fixed; top: 1em; left: 1.5em; font-size: 0.55em; color: var(--zinc-400); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+    .reveal .mock {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.62em;
+      background: white;
+      border: 1px solid var(--zinc-200);
+      border-radius: 6px;
+      padding: 0.7em 0.9em;
+      line-height: 1.6;
+      white-space: pre;
+      overflow-x: auto;
+      color: var(--zinc-700);
+    }
+    .reveal .mock .red { color: var(--red-700); font-weight: 600; }
+    .reveal .mock .amber { color: var(--amber-700); }
+    .reveal .mock .green { color: var(--green-700); }
+    .reveal pre {
+      background: var(--zinc-50);
+      border: 1px solid var(--zinc-200);
+      border-radius: 6px;
+      padding: 0.7em 0.9em;
+      font-size: 0.7em;
+      line-height: 1.5;
+    }
+    .reveal pre code { background: transparent; border: none; padding: 0; font-size: 1em; }
+    .reveal .scenario-block {
+      padding: 0.6em 0.9em;
+      border: 1px solid var(--zinc-200);
+      border-radius: 6px;
+      margin: 0.4em 0;
+      font-size: 0.9em;
+    }
+    .reveal .scenario-block strong { color: var(--zinc-900); }
+  </style>
+</head>
+<body>
+  <div class="deck-number">Deck 4 / 4 — Production</div>
+  <div class="footer">Build Header Triage View · Siray Li</div>
+  <div class="reveal">
+    <div class="slides">
+
+      <section>
+        <h3>Deck 4</h3>
+        <h1>Production &amp; Future</h1>
+        <p class="muted">What ships, what's deferred, and what plugs in next.</p>
+      </section>
+
+      <section>
+        <h2>V7 walkthrough</h2>
+<div class="mock">✓ Checkout › ✓ Dependencies › ✓ Lint › <span class="red">⚠ Test matrix</span> › <span class="amber">○ Bundle</span> › <span class="amber">○ Deploy</span>
+
+┌──────────────────────────────────────────────────────────────┐
+│ <span class="red">⚠ Test (Node 18)</span>  exit 1  1m 12s · prev 1m 18s  flaky · 3/5  │
+│                                       📋 Copy summary  [↻ Retry] │
+│   in Test matrix · Node 16 passed · Node 20 pending          │
+│   Likely a CommonJS/ESM import mismatch on Node 18.          │
+│   Show more explanation ▾                                    │
+│   [Preview fix ▾]                                            │
+└──────────────────────────────────────────────────────────────┘</div>
+        <p class="muted" style="margin-top: 0.6em;">Reading order matches user attention: orientation → answer → diagnostic → action.</p>
+      </section>
+
+      <section>
+        <h2>One element per role</h2>
+        <table>
+          <thead><tr><th>Element</th><th>Communicates</th></tr></thead>
+          <tbody>
+            <tr><td>Pipeline strip</td><td>Pipeline shape (visual gestalt) + blast radius (amber pending)</td></tr>
+            <tr><td>Failure card</td><td>What broke + diagnostic + action gate</td></tr>
+            <tr><td>Per-row Copy summary</td><td>Share that specific failure's context</td></tr>
+            <tr><td>Per-row Retry</td><td>Re-run that specific job</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top: 0.8em;">No element duplicates another's job. <span class="strong">Summary layer, not a duplicate of the step list below.</span></p>
+      </section>
+
+      <section>
+        <h2>Visual rules</h2>
+        <h3>Two type sizes only · 14px max</h3>
+        <ul>
+          <li><code>text-sm</code> (14px) — body, headings</li>
+          <li><code>text-xs</code> (12px) — meta, buttons, labels</li>
+          <li><code>font-mono</code> — exit codes, durations only</li>
+        </ul>
+        <h3 style="margin-top: 1em;">Highlight only the highest-value signals</h3>
+        <ul>
+          <li><span class="accent">Highlighted</span> — red AlertCircle, semibold failure name, exit code badge</li>
+          <li>Plain neutral — duration, parent step, matrix context, flaky text</li>
+        </ul>
+        <h3 style="margin-top: 1em;">Affordance vocabulary maps to commitment level</h3>
+        <ul>
+          <li>Outlined buttons → reversible (Retry, Preview fix)</li>
+          <li>Solid black → only Apply fix</li>
+          <li>Ghost buttons → soft actions (Copy summary)</li>
+          <li>Inline text links → content disclosure (Show more explanation)</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Scenarios served</h2>
+        <div class="scenario-block">
+          <strong>V7 default</strong> — PRD Scenario 1 (notification → triage → fix → share). The base case.
+        </div>
+        <div class="scenario-block">
+          <strong>V7.1 — Stuck build</strong> · Scenario 2 Variant B<br>
+          <span class="muted">Duration anomaly (3h 24m · 8m typical · 25× over) · Retry / Cancel · the only signal that distinguishes "stuck" from "still running"</span>
+        </div>
+        <div class="scenario-block">
+          <strong>V7.2 — Verified</strong> · Scenario 1 + 2 verification<br>
+          <span class="muted">"Test (Node 18) was previously failing — now passing" · attribution + link to previous build</span>
+        </div>
+        <div class="scenario-block">
+          <strong>V7.4 — Multi-failure</strong> · scalability of the row pattern<br>
+          <span class="muted">Lint + Test matrix both failed · per-row Copy summary, Retry, suggestion, Preview fix</span>
+        </div>
+        <div class="scenario-block">
+          <strong>V7.5 — Cross-build</strong> · Scenario 4 (out-of-scope per PRD §12.2 but design accommodates)<br>
+          <span class="muted">Banner alert · flaky pill suppressed (higher-scope signal subsumes per-pipeline one)</span>
+        </div>
+      </section>
+
+      <section>
+        <h2>Architecture</h2>
+        <h3>Typed pattern dispatch</h3>
+<pre><code>const failurePatterns: FailurePattern[] = [
+  { id: "commonjs-esm-mismatch", matches: ..., suggestion, explanation, fix },
+  { id: "eslint-violations",     matches: ..., suggestion, explanation, fix },
+  { id: "oom-kill",              matches: (_, exit) =&gt; exit === 137, ... },
+];</code></pre>
+        <p>One entry per pattern. Suggestion + explanation + fix coupled by typed identity.</p>
+        <h3 style="margin-top: 0.8em;">Scenario data — single source of truth</h3>
+        <p><code>App.tsx</code>'s <code>getScenarioForVariant()</code> picks the right dataset, so the <span class="strong">whole</span> build header (collapsed bar AND expanded panel) reflects the scenario.</p>
+      </section>
+
+      <section>
+        <h2>Accessibility wins</h2>
+        <ul>
+          <li>WCAG AA contrast (zinc-500 minimum on white)</li>
+          <li>Status icons paired with <code>aria-label</code> on links — SR hears "Test matrix, Failed"</li>
+          <li>Copy summary state change announced via visually-hidden <code>aria-live="polite"</code></li>
+          <li>All disclosure triggers carry <code>aria-expanded</code></li>
+          <li>Decorative icons consistently <code>aria-hidden="true"</code></li>
+          <li>Focus-visible rings on every interactive element</li>
+          <li>Semantic HTML: <code>&lt;nav&gt;&lt;ol&gt;</code> for the strip, real <code>&lt;button&gt;</code> / <code>&lt;a&gt;</code> distinguished</li>
+          <li>Status communicated via icon + text label, never colour alone</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Trade-offs &amp; deferred work</h2>
+        <h3>Conscious trade-offs</h3>
+        <ul>
+          <li>AI labelling: implicit on surface, explicit inside disclosure</li>
+          <li>Per-row Copy summary: granular sharing vs slight redundancy</li>
+          <li>Pipeline strip vs progress bar: strip wins in expanded view</li>
+        </ul>
+        <h3 style="margin-top: 0.8em;">Out-of-scope per PRD §12.2</h3>
+        <ul>
+          <li>Real telemetry (flaky count, typical duration, cross-build count are mocked)</li>
+          <li>Real AI service integration (pattern dispatch is the contract)</li>
+          <li>Inline log preview (lives in Tier 3)</li>
+          <li>Cross-build aggregation as a separate surface (V7.5 is the entry only)</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>What plugs in next</h2>
+        <p class="muted">The architecture is designed so the next round doesn't require redesign.</p>
+        <table>
+          <thead><tr><th>Future capability</th><th>Where it plugs in</th></tr></thead>
+          <tbody>
+            <tr><td>Real build history API</td><td>Replaces mocked flaky/typical-duration/cross-build counts</td></tr>
+            <tr><td>Real LLM integration</td><td>Pattern dispatch becomes the schema; service returns typed patterns</td></tr>
+            <tr><td>Cross-build aggregation surface</td><td>V7.5 banner is the entry point; the actual aggregation view is a sibling component</td></tr>
+            <tr><td>AI confidence + feedback loop</td><td>Surface uncertainty; capture user accept/reject on Apply</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Q&amp;A points for the conversation</h2>
+        <ol>
+          <li><strong>The PRD as scaffolding</strong> — how the strategy doc shaped what to design and what to defer</li>
+          <li><strong>Why iteration was valuable</strong> — most decisions came from rejecting alternatives</li>
+          <li><strong>The pattern dispatch refactor</strong> — refactoring under iteration pressure</li>
+          <li><strong>Trade-offs I'm uncertain about</strong> — AI labelling, Copy summary scope, amber overload</li>
+          <li><strong>What changes for production</strong> — where real telemetry / AI service plug in, what stays the same</li>
+        </ol>
+      </section>
+
+      <section>
+        <h3>Wrap</h3>
+        <h2>Thank you.</h2>
+        <p class="muted">Happy to walk through any part of this in more depth.</p>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+  <script>
+    Reveal.initialize({ hash: true, controls: true, progress: true, slideNumber: 'c/t', transition: 'fade', transitionSpeed: 'fast' });
+  </script>
+</body>
+</html>

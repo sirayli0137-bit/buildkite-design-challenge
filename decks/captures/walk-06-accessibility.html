@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accessibility — Build Header Triage View</title>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <style>
+    :root { --zinc-50: #fafafa; --zinc-100: #f4f4f5; --zinc-200: #e4e4e7; --zinc-400: #a1a1aa; --zinc-500: #71717a; --zinc-700: #3f3f46; --zinc-900: #18181b; --green-700: #15803d; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: white; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; color: var(--zinc-900); }
+    .slide { width: 1280px; height: 720px; padding: 64px 80px; position: relative; background: white; display: flex; flex-direction: column; }
+    .deck-tag { position: absolute; top: 32px; left: 80px; font-size: 11px; color: var(--zinc-400); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+    .footer { position: absolute; bottom: 32px; right: 80px; font-size: 11px; color: var(--zinc-400); letter-spacing: 0.04em; }
+    h2 { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif; font-size: 36px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 8px 0; }
+    .lead { font-size: 16px; color: var(--zinc-500); margin: 0 0 24px 0; line-height: 1.4; }
+    .checklist { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .check-item { padding: 14px 18px; border: 1px solid var(--zinc-200); border-radius: 8px; }
+    .check-item .head { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--zinc-900); margin-bottom: 6px; }
+    .check-item .head .tick { color: var(--green-700); font-weight: 700; }
+    .check-item .body { font-size: 12px; color: var(--zinc-700); line-height: 1.5; }
+    .check-item code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--zinc-100); padding: 0.1em 0.4em; border-radius: 3px; font-size: 11px; color: var(--zinc-900); }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <div class="deck-tag">Slide 6 — Accessibility</div>
+    <h2>Six checks, each with a line of code</h2>
+    <p class="lead">Not just "I thought about accessibility." Every item below points to something a reviewer can find in the code.</p>
+
+    <div class="checklist">
+      <div class="check-item">
+        <div class="head"><span class="tick">✓</span>Screen readers hear status, not just names</div>
+        <div class="body">Step links carry <code>aria-label="${name}, ${getStatusLabel(status)}"</code>. Screen readers say <em>"Test matrix, Failed"</em>, not just <em>"Test matrix"</em>. Colour is never the only signal.</div>
+      </div>
+
+      <div class="check-item">
+        <div class="head"><span class="tick">✓</span>Changes are announced out loud</div>
+        <div class="body">Copy summary uses a hidden <code>&lt;span aria-live="polite"&gt;</code> that reads <em>"Summary copied to clipboard"</em> on success. Silent changes feel broken.</div>
+      </div>
+
+      <div class="check-item">
+        <div class="head"><span class="tick">✓</span>Contrast meets WCAG AA</div>
+        <div class="body">All body text is <code>text-zinc-500</code> minimum on white (4.6:1). Amber and red use shades 700+ for readable contrast (4.5:1 minimum).</div>
+      </div>
+
+      <div class="check-item">
+        <div class="head"><span class="tick">✓</span>Expand/collapse buttons say what they do</div>
+        <div class="body">Every expand button has <code>aria-expanded</code>. Decorative icons have <code>aria-hidden="true"</code>. The chevron rotation backs up the ARIA state, doesn't replace it.</div>
+      </div>
+
+      <div class="check-item">
+        <div class="head"><span class="tick">✓</span>Focus rings on everything you can click</div>
+        <div class="body"><code>focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2</code> on every button, link, and expand. Keyboard users always know where they are.</div>
+      </div>
+
+      <div class="check-item">
+        <div class="head"><span class="tick">✓</span>Real HTML, not nested divs</div>
+        <div class="body">The pipeline strip is a <code>&lt;nav&gt;&lt;ol&gt;</code>. Real <code>&lt;button type="button"&gt;</code> for actions, real <code>&lt;a href&gt;</code> for links. Tab order matches what you see.</div>
+      </div>
+    </div>
+
+    <div class="footer">Build Header Triage View · Siray Li</div>
+  </div>
+</body>
+</html>

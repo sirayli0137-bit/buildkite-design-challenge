@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>V7 scenarios — Build Header Triage View</title>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <style>
+    :root {
+      --zinc-50: #fafafa; --zinc-100: #f4f4f5; --zinc-200: #e4e4e7; --zinc-400: #a1a1aa; --zinc-500: #71717a;
+      --zinc-700: #3f3f46; --zinc-900: #18181b; --blue-700: #1d4ed8; --blue-50: #eff6ff;
+      --green-50: #f0fdf4; --green-200: #bbf7d0; --green-700: #15803d;
+      --amber-50: #fffbeb; --amber-200: #fde68a; --amber-700: #b45309;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: white; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; color: var(--zinc-900); }
+    .slide { width: 1280px; height: 720px; padding: 56px 64px; position: relative; background: white; display: flex; flex-direction: column; }
+    .deck-tag { position: absolute; top: 28px; left: 64px; font-size: 11px; color: var(--zinc-400); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+    .footer { position: absolute; bottom: 28px; right: 64px; font-size: 11px; color: var(--zinc-400); letter-spacing: 0.04em; }
+    h2 { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif; font-size: 30px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.1; margin: 0 0 6px 0; }
+    .lead { font-size: 14px; color: var(--zinc-500); margin: 0 0 14px 0; line-height: 1.4; }
+    .whats-new { padding: 12px 16px; border: 1px solid var(--blue-700); background: var(--blue-50); border-radius: 8px; margin-bottom: 14px; }
+    .whats-new .label { font-size: 10px; font-weight: 700; color: var(--blue-700); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 4px; }
+    .whats-new h3 { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif; font-size: 13px; font-weight: 700; margin: 0 0 6px 0; color: var(--zinc-900); }
+    .whats-new ul { margin: 0; padding-left: 18px; font-size: 12px; color: var(--zinc-700); line-height: 1.55; }
+    .whats-new ul li { margin-bottom: 2px; }
+    .whats-new strong { color: var(--zinc-900); }
+    .scenarios { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .scenario-block { padding: 10px 14px; border: 1px solid var(--zinc-200); border-radius: 6px; font-size: 13px; line-height: 1.45; }
+    .scenario-block.spans { grid-column: 1 / -1; }
+    .scenario-block strong { color: var(--zinc-900); font-weight: 600; }
+    .scenario-block .label { font-size: 10px; font-weight: 700; color: var(--zinc-500); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 4px; display: block; }
+    .scenario-block .muted { color: var(--zinc-500); font-size: 12px; display: block; margin-top: 4px; }
+    .new-tag { display: inline-block; font-size: 9px; font-weight: 700; color: var(--blue-700); background: var(--blue-50); padding: 1px 5px; border-radius: 3px; letter-spacing: 0.05em; margin-left: 4px; vertical-align: middle; }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <div class="deck-tag">Slide 13 — V7 scenarios served</div>
+    <h2>V7.1 through V7.5 — same component, five failure shapes</h2>
+    <p class="lead">One row pattern, scaled to every shape. Each scenario shows how the component holds up when the failure changes form.</p>
+
+    <div class="whats-new">
+      <div class="label">Updates from the metrics pass</div>
+      <h3>Four improvements applied across scenarios</h3>
+      <ul>
+        <li><strong>Inline retry result</strong> — every Retry button now reports back on the page, closing the loop without users leaving.</li>
+        <li><strong>AI feedback + confidence chip</strong> — every AI explanation card now shows confidence and captures user feedback. Required to measure AI accept rate.</li>
+        <li><strong>Adaptive primary action</strong> — for deterministic code bugs, Preview Fix is now the primary action (heavier weight); Retry demotes to secondary.</li>
+        <li><strong>V7.5 banner is actionable</strong> — primary "View affected builds" + secondary "Notify platform team" replace the read-only banner.</li>
+      </ul>
+    </div>
+
+    <div class="scenarios">
+      <div class="scenario-block spans">
+        <span class="label">V7 default</span>
+        <strong>Single failure, the base case</strong> · PRD Scenario 1 (notification → triage → fix → share)
+      </div>
+      <div class="scenario-block">
+        <span class="label">V7.1 — Stuck build</span>
+        <strong>Duration anomaly</strong>
+        <span class="muted">3h 24m vs 8m typical (25× over). The only signal that distinguishes "stuck" from "still running."</span>
+      </div>
+      <div class="scenario-block">
+        <span class="label">V7.2 — Verified pass after retry<span class="new-tag">UPDATED</span></span>
+        <strong>"Was previously failing — now passing"</strong>
+        <span class="muted">Inline retry result builds on this scenario. Attribution + link to previous build.</span>
+      </div>
+      <div class="scenario-block">
+        <span class="label">V7.4 — Multi-failure</span>
+        <strong>Two rows, same primitives</strong>
+        <span class="muted">Lint + Test matrix both failed. Per-row Copy / Retry / Preview Fix — both rows now show Preview Fix as primary (deterministic patterns).</span>
+      </div>
+      <div class="scenario-block">
+        <span class="label">V7.5 — Cross-build<span class="new-tag">UPDATED</span></span>
+        <strong>Banner is now actionable</strong>
+        <span class="muted">Primary: View affected builds · Secondary: Notify platform team. Was read-only; now drives investigation.</span>
+      </div>
+    </div>
+
+    <div class="footer">Build Header Triage View · Siray Li</div>
+  </div>
+</body>
+</html>

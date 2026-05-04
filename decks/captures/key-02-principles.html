@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Six Design Principles — Build Header Triage View</title>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <style>
+    :root {
+      --zinc-50: #fafafa; --zinc-200: #e4e4e7; --zinc-400: #a1a1aa; --zinc-500: #71717a;
+      --zinc-700: #3f3f46; --zinc-900: #18181b;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: white; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; color: var(--zinc-900); }
+    .slide { width: 1280px; height: 720px; padding: 64px 80px; position: relative; background: white; display: flex; flex-direction: column; }
+    .deck-tag { position: absolute; top: 32px; left: 80px; font-size: 11px; color: var(--zinc-400); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+    .footer { position: absolute; bottom: 32px; right: 80px; font-size: 11px; color: var(--zinc-400); letter-spacing: 0.04em; }
+    h2 { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif; font-size: 40px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.15; margin: 0 0 12px 0; }
+    .muted { color: var(--zinc-500); font-size: 18px; line-height: 1.5; margin: 0 0 24px 0; }
+    .principle { display: flex; gap: 16px; margin: 14px 0; align-items: flex-start; font-size: 20px; line-height: 1.4; }
+    .principle .name { color: var(--zinc-900); font-weight: 600; flex: 0 0 320px; }
+    .principle .desc { color: var(--zinc-700); }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <div class="deck-tag">Deck 1 / 4 — Strategy · Slide 6</div>
+    <h2>Six design principles</h2>
+    <p class="muted">Each one came back as a deciding vote during iteration.</p>
+    <div class="principle"><span class="name">1. Failure-first</span><span class="desc">failure is the headline</span></div>
+    <div class="principle"><span class="name">2. Triage, not deep-dive</span><span class="desc">logs are one click away</span></div>
+    <div class="principle"><span class="name">3. Blast radius clarity</span><span class="desc">what's blocked, by name</span></div>
+    <div class="principle"><span class="name">4. Accessible to non-experts</span><span class="desc">plain language + colour + text</span></div>
+    <div class="principle"><span class="name">5. Status-aware</span><span class="desc">passed / running / failed each have their own framing</span></div>
+    <div class="principle"><span class="name">6. Compact and contained</span><span class="desc">a header, not a dashboard</span></div>
+    <div class="footer">Build Header Triage View · Siray Li</div>
+  </div>
+</body>
+</html>

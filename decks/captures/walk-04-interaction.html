@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interaction design — Build Header Triage View</title>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <style>
+    :root { --zinc-50: #fafafa; --zinc-100: #f4f4f5; --zinc-200: #e4e4e7; --zinc-300: #d4d4d8; --zinc-400: #a1a1aa; --zinc-500: #71717a; --zinc-700: #3f3f46; --zinc-900: #18181b; --red-700: #b91c1c; --green-100: #dcfce7; --green-700: #15803d; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: white; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; color: var(--zinc-900); }
+    .slide { width: 1280px; height: 720px; padding: 64px 80px; position: relative; background: white; display: flex; flex-direction: column; }
+    .deck-tag { position: absolute; top: 32px; left: 80px; font-size: 11px; color: var(--zinc-400); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+    .footer { position: absolute; bottom: 32px; right: 80px; font-size: 11px; color: var(--zinc-400); letter-spacing: 0.04em; }
+    h2 { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif; font-size: 36px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 8px 0; }
+    .lead { font-size: 16px; color: var(--zinc-500); margin: 0 0 24px 0; line-height: 1.4; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .panel { padding: 16px 20px; border: 1px solid var(--zinc-200); border-radius: 8px; }
+    .panel h3 { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif; font-size: 14px; color: var(--zinc-500); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 12px 0; }
+    .commitment-row { display: flex; align-items: center; gap: 14px; margin: 10px 0; font-size: 13px; }
+    .btn { font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif; font-size: 12px; font-weight: 500; padding: 5px 10px; border-radius: 6px; line-height: 1; }
+    .btn-outlined { border: 1px solid var(--zinc-300); background: white; color: var(--zinc-700); }
+    .btn-solid { background: var(--zinc-900); color: white; border: 1px solid var(--zinc-900); }
+    .btn-ghost { color: var(--zinc-500); padding: 5px 8px; }
+    .btn-link { color: var(--zinc-500); text-decoration: none; padding: 0; border: none; font-size: 13px; }
+    .commitment-row .label { flex: 1; color: var(--zinc-700); }
+    .commitment-row .commit { font-size: 11px; color: var(--zinc-400); width: 110px; text-align: right; }
+    .state-flow { display: flex; align-items: center; gap: 8px; margin: 12px 0; font-size: 13px; flex-wrap: wrap; }
+    .state-step { padding: 6px 10px; border: 1px solid var(--zinc-200); border-radius: 6px; background: white; }
+    .state-step.green { background: var(--green-100); border-color: var(--green-700); color: var(--green-700); font-weight: 600; }
+    .state-arrow { color: var(--zinc-300); }
+    .principle-line { display: flex; gap: 8px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--zinc-100); font-size: 12px; color: var(--zinc-500); line-height: 1.5; }
+    .principle-line strong { color: var(--zinc-900); font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <div class="deck-tag">Slide 4 — Interaction design</div>
+    <h2>Stronger button = bigger action</h2>
+    <p class="lead">How a button looks tells you how big the action is — before you read the label.</p>
+
+    <div class="grid">
+      <div class="panel">
+        <h3>Buttons in order of commitment</h3>
+        <div class="commitment-row">
+          <button class="btn btn-link">Show more explanation ▾</button>
+          <span class="label">Text link</span>
+          <span class="commit">Just look</span>
+        </div>
+        <div class="commitment-row">
+          <button class="btn btn-ghost">📋 Copy summary</button>
+          <span class="label">Plain button</span>
+          <span class="commit">No risk</span>
+        </div>
+        <div class="commitment-row">
+          <button class="btn btn-outlined">↻ Retry</button>
+          <span class="label">Outlined button</span>
+          <span class="commit">Reversible</span>
+        </div>
+        <div class="commitment-row">
+          <button class="btn btn-outlined">Preview fix ▾</button>
+          <span class="label">Outlined, expandable</span>
+          <span class="commit">Look first, then act</span>
+        </div>
+        <div class="commitment-row">
+          <button class="btn btn-solid">✓ Apply fix</button>
+          <span class="label">Filled button</span>
+          <span class="commit">Real change</span>
+        </div>
+        <div class="principle-line">
+          <strong>Why →</strong>
+          <span>Apply fix is the only filled button on screen, because it's the only one that actually changes code. You can read commitment off the button before reading the label.</span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Every state change is shown, not assumed</h3>
+        <p style="font-size: 13px; color: var(--zinc-700); margin: 0 0 8px 0;">Preview fix → Apply fix → Fix applied. Three steps, each with its own visual.</p>
+        <div class="state-flow">
+          <span class="state-step">Preview fix ▾</span>
+          <span class="state-arrow">→</span>
+          <span class="state-step">Diff visible · Apply fix</span>
+        </div>
+        <div class="state-flow">
+          <span class="state-step">Click Apply</span>
+          <span class="state-arrow">→</span>
+          <span class="state-step green">✓ Fix applied · Pipeline re-running</span>
+        </div>
+        <h3 style="margin-top: 18px;">The expand button sits right next to what it expands</h3>
+        <p style="font-size: 13px; color: var(--zinc-700); margin: 0;">No diagonal eye-track. The chevron rotates ▾ → ▴ to confirm the toggle.</p>
+        <div class="principle-line">
+          <strong>Why →</strong>
+          <span>Hidden state changes break trust. When you click Apply, you immediately see a green row that names the file changed, with a way to undo.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">Build Header Triage View · Siray Li</div>
+  </div>
+</body>
+</html>

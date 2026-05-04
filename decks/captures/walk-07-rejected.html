@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What I rejected — Build Header Triage View</title>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <style>
+    :root { --zinc-50: #fafafa; --zinc-100: #f4f4f5; --zinc-200: #e4e4e7; --zinc-400: #a1a1aa; --zinc-500: #71717a; --zinc-700: #3f3f46; --zinc-900: #18181b; --red-700: #b91c1c; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: white; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; color: var(--zinc-900); }
+    .slide { width: 1280px; height: 720px; padding: 64px 80px; position: relative; background: white; display: flex; flex-direction: column; }
+    .deck-tag { position: absolute; top: 32px; left: 80px; font-size: 11px; color: var(--zinc-400); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+    .footer { position: absolute; bottom: 32px; right: 80px; font-size: 11px; color: var(--zinc-400); letter-spacing: 0.04em; }
+    h2 { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif; font-size: 36px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 8px 0; }
+    .lead { font-size: 16px; color: var(--zinc-500); margin: 0 0 24px 0; line-height: 1.4; }
+    .rejected { padding: 18px 24px; border: 1px solid var(--zinc-200); border-radius: 8px; margin: 12px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .rejected .name { display: flex; align-items: baseline; gap: 12px; margin-bottom: 8px; }
+    .rejected .name .num { font-size: 24px; font-weight: 700; color: var(--red-700); line-height: 1; }
+    .rejected .name h3 { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif; font-size: 18px; font-weight: 700; color: var(--zinc-900); margin: 0; line-height: 1.2; }
+    .rejected .body { font-size: 13px; color: var(--zinc-700); line-height: 1.5; }
+    .rejected .why { font-size: 13px; line-height: 1.5; padding-left: 16px; border-left: 2px solid var(--zinc-200); color: var(--zinc-700); }
+    .rejected .why strong { color: var(--zinc-900); font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <div class="deck-tag">Slide 7 — What I left out</div>
+    <h2>What I deliberately did NOT include</h2>
+    <p class="lead">Judgement shows up in what gets cut. Three calls I made on purpose, with the principle that broke the tie.</p>
+
+    <div class="rejected">
+      <div>
+        <div class="name"><span class="num">01</span><h3>Inline log preview</h3></div>
+        <div class="body">An obvious-looking add: show the failing line or last 5 log lines right inside the failure card.</div>
+      </div>
+      <div class="why"><strong>Why I cut it →</strong> Logs already live in the section right below. Putting them here would just repeat what's there. The expanded view is a summary, not a copy of the logs.</div>
+    </div>
+
+    <div class="rejected">
+      <div>
+        <div class="name"><span class="num">02</span><h3>A row listing "Blocked: Bundle, Deploy"</h3></div>
+        <div class="body">Earlier variants (V3–V6) had a row showing blocked steps as chips. Removed in V7.</div>
+      </div>
+      <div class="why"><strong>Why I cut it →</strong> The pipeline strip already shows blocked steps in their right place — with deep links per step. A separate list would just say the same thing twice. <strong>One element per job.</strong></div>
+    </div>
+
+    <div class="rejected">
+      <div>
+        <div class="name"><span class="num">03</span><h3>"AI" labels and Sparkles everywhere</h3></div>
+        <div class="body">Earlier versions had Sparkles icons next to suggestions and "AI" in every button label. I removed them.</div>
+      </div>
+      <div class="why"><strong>Why I cut it →</strong> Plastering "AI" everywhere reads like marketing. The user's job is to fix the build, not to interact with AI. The AI source is named once inside the explanation panel — not on every button.</div>
+    </div>
+
+    <div class="footer">Build Header Triage View · Siray Li</div>
+  </div>
+</body>
+</html>

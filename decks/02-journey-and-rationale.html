@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Journey & Design Rationale — Build Header Triage View</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/white.css">
+  <style>
+    :root {
+      --zinc-50: #fafafa; --zinc-200: #e4e4e7; --zinc-400: #a1a1aa; --zinc-500: #71717a;
+      --zinc-700: #3f3f46; --zinc-900: #18181b;
+      --red-500: #ef4444; --red-700: #b91c1c;
+      --amber-500: #f59e0b; --amber-700: #b45309;
+    }
+    .reveal { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; color: var(--zinc-900); font-size: 26px; }
+    .reveal h1, .reveal h2, .reveal h3 { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif; color: var(--zinc-900); font-weight: 700; text-transform: none; letter-spacing: -0.01em; line-height: 1.15; margin-bottom: 0.4em; }
+    .reveal h1 { font-size: 2.4em; }
+    .reveal h2 { font-size: 1.8em; }
+    .reveal h3 { font-size: 1.2em; color: var(--zinc-500); font-weight: 600; }
+    .reveal .slides section { text-align: left; padding: 0 1em; }
+    .reveal blockquote { border-left: 4px solid var(--zinc-200); padding-left: 1em; font-style: normal; color: var(--zinc-700); box-shadow: none; width: 100%; max-width: 900px; }
+    .reveal ul, .reveal ol { margin-left: 1.2em; }
+    .reveal li { margin: 0.4em 0; line-height: 1.4; }
+    .reveal table { margin: 0.5em 0; font-size: 0.78em; border-collapse: collapse; width: 100%; }
+    .reveal table th, .reveal table td { padding: 0.5em 0.75em; border-bottom: 1px solid var(--zinc-200); text-align: left; vertical-align: top; }
+    .reveal table th { background: var(--zinc-50); font-weight: 600; color: var(--zinc-700); font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.04em; }
+    .reveal code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--zinc-50); padding: 0.1em 0.4em; border-radius: 3px; border: 1px solid var(--zinc-200); font-size: 0.85em; }
+    .reveal .muted { color: var(--zinc-500); }
+    .reveal .strong { color: var(--zinc-900); font-weight: 600; }
+    .reveal .accent { color: var(--red-700); }
+    .reveal .footer { position: fixed; bottom: 1em; right: 1.5em; font-size: 0.55em; color: var(--zinc-400); letter-spacing: 0.04em; }
+    .reveal .deck-number { position: fixed; top: 1em; left: 1.5em; font-size: 0.55em; color: var(--zinc-400); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+    .reveal .archetype { padding: 0.7em 1em; border: 1px solid var(--zinc-200); border-radius: 6px; margin: 0.5em 0; background: white; }
+    .reveal .archetype h3 { color: var(--zinc-900); font-weight: 700; margin-bottom: 0.3em; }
+    .reveal .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1em; }
+  </style>
+</head>
+<body>
+  <div class="deck-number">Deck 2 / 4 — Journey</div>
+  <div class="footer">Build Header Triage View · Siray Li</div>
+  <div class="reveal">
+    <div class="slides">
+
+      <section>
+        <h3>Deck 2</h3>
+        <h1>Journey &amp; Rationale</h1>
+        <p class="muted">How user research drove specific design choices.</p>
+      </section>
+
+      <section>
+        <h2>Two archetypes</h2>
+        <div class="archetype">
+          <h3>Jordan — Product Engineer</h3>
+          <p class="muted">Solo or small team. Shipped a PR, build failed. In "fix mode."</p>
+          <p>Wants the shortest path to <span class="strong">"what broke and how do I fix it?"</span> · May not have DevOps expertise.</p>
+        </div>
+        <div class="archetype">
+          <h3>Sam — Reviewer / Team Lead</h3>
+          <p class="muted">Reviewing PRs or monitoring the build queue. Not the author.</p>
+          <p>Wants <span class="strong">blast radius and severity</span> at a glance · "Is this PR's author actually responsible for this?"</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>Where this component lives</h2>
+        <h3>Stage 5 of the journey</h3>
+        <p>The collapsed progress bar (Tier 1) gave them a glimpse. They click. They expect an answer.</p>
+        <blockquote>
+          <span class="strong">Today:</span> empty placeholder. They scroll past the header and click into individual step logs.
+        </blockquote>
+        <p style="margin-top: 1em;"><span class="accent">The intent moment is wasted at exactly the point urgency is highest.</span></p>
+      </section>
+
+      <section>
+        <h2>Pain points → addressed</h2>
+        <table>
+          <thead><tr><th>Pain</th><th>Addressed by</th></tr></thead>
+          <tbody>
+            <tr><td>"I see 'failed' but not 'why'"</td><td>Failure name + exit code + duration vs typical, in the failure card top row</td></tr>
+            <tr><td>"Am I blocking teammates?"</td><td>Pipeline strip's amber pending labels show blast radius without expansion</td></tr>
+            <tr><td>"Exit codes are jargon"</td><td>Suggestion line in plain prose</td></tr>
+            <tr><td>"Is this even my problem?"</td><td>Flaky pill (3 of 5 runs) · Cross-build banner when wider pattern exists</td></tr>
+            <tr><td>"I have to scroll to find the right step"</td><td>Failure name is a deep link to Tier 3</td></tr>
+            <tr><td>"No context to share with my team"</td><td>Per-row Copy summary in top-right</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>JTBDs → design elements</h2>
+        <table>
+          <thead><tr><th>Job to be done</th><th>Where it lives in V7</th></tr></thead>
+          <tbody>
+            <tr><td>"Instantly see which job broke and why"</td><td>Failure card top row</td></tr>
+            <tr><td>"Understand the blast radius"</td><td>Pipeline strip's amber pending labels</td></tr>
+            <tr><td>"Know which is the root cause"</td><td>V7.4 — rows scale to N failures, each independent</td></tr>
+            <tr><td>"Plain language, not log decoding"</td><td>Suggestion line + Show more explanation accordion</td></tr>
+            <tr><td>"Share context with the team"</td><td>Per-row Copy summary</td></tr>
+            <tr><td>"Retry a flaky job"</td><td>Per-row Retry button (next to flaky indicator)</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>How a principle drives a choice</h2>
+        <ul>
+          <li><span class="strong">Failure-first</span> → only red AlertCircle + semibold name + red exit-code badge are highlighted; everything else stays neutral so failure dominates the scan</li>
+          <li><span class="strong">Triage, not deep-dive</span> → no inline log preview; failure name is a one-click deep link to Tier 3</li>
+          <li><span class="strong">Blast radius clarity</span> → strip's amber pending labels carry the signal; an explicit "Blocks" row was redundant</li>
+          <li><span class="strong">Accessible to non-experts</span> → plain prose; status icon + colour + text (not colour alone); aria-labels for SR</li>
+          <li><span class="strong">Status-aware</span> → V7Refined / V7Passed / V7Running / V7_1_Stuck handle four states</li>
+          <li><span class="strong">Compact and contained</span> → strict 14px max; two type sizes total</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Trade-offs we made consciously</h2>
+        <ul>
+          <li><span class="strong">AI labelling implicit on surface, explicit inside disclosure</span> — surface reads as ordinary diagnostic; AI source is acknowledged when the user expands</li>
+          <li><span class="strong">Per-row Copy summary in multi-failure</span> — granular sharing for asymmetric audiences, at the cost of slight redundancy when sharing the whole build</li>
+          <li><span class="strong">Pipeline strip vs progress bar in expanded state</span> — strip carries the same shape information at higher fidelity; bar disappears on expand to avoid duplication</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Wrap</h3>
+        <h2>The journey map gave me concrete user moments to design against.</h2>
+        <p class="muted">When two design options were viable, the one that better served <span class="strong">both</span> archetypes won.</p>
+        <p style="margin-top: 1.5em; color: var(--zinc-400); font-size: 0.8em;">→ Next deck: design exploration · how V2 became V7</p>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+  <script>
+    Reveal.initialize({ hash: true, controls: true, progress: true, slideNumber: 'c/t', transition: 'fade', transitionSpeed: 'fast' });
+  </script>
+</body>
+</html>

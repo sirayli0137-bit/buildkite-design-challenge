@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Variants Overview — Build Header Triage View</title>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <style>
+    :root {
+      --zinc-50: #fafafa; --zinc-200: #e4e4e7; --zinc-400: #a1a1aa; --zinc-500: #71717a;
+      --zinc-700: #3f3f46; --zinc-900: #18181b; --red-700: #b91c1c;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: white; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; color: var(--zinc-900); }
+    .slide { width: 1280px; height: 720px; padding: 64px 80px; position: relative; background: white; display: flex; flex-direction: column; }
+    .deck-tag { position: absolute; top: 32px; left: 80px; font-size: 11px; color: var(--zinc-400); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+    .footer { position: absolute; bottom: 32px; right: 80px; font-size: 11px; color: var(--zinc-400); letter-spacing: 0.04em; }
+    h2 { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif; font-size: 40px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.15; margin: 0 0 24px 0; }
+    table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+    th, td { padding: 12px 16px; border-bottom: 1px solid var(--zinc-200); text-align: left; vertical-align: top; font-size: 14px; }
+    th { background: var(--zinc-50); font-weight: 600; color: var(--zinc-700); font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .opt-name { font-weight: 700; color: var(--zinc-900); white-space: nowrap; }
+    .accent { color: var(--red-700); font-weight: 700; }
+    tr.production td { background: rgba(220, 38, 38, 0.04); }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <div class="deck-tag">Deck 3 / 4 — Exploration · Slide 3</div>
+    <h2>Variants overview</h2>
+    <table>
+      <thead><tr><th>Option</th><th>Question it tested</th><th>Outcome</th></tr></thead>
+      <tbody>
+        <tr><td class="opt-name">2 — Zoned</td><td>Do background fills + uppercase section labels help non-experts?</td><td>Heavy visual weight; rejected</td></tr>
+        <tr><td class="opt-name">3 — Sectioned</td><td>Plain-language labels: "What failed / What it blocks / What to do"?</td><td>Strong frame, inconsistent affordances</td></tr>
+        <tr><td class="opt-name">4 — Merged</td><td>Combine V3's labels with V2's blast radius + flaky badge + Copy</td><td>Useful synthesis; still card-based</td></tr>
+        <tr><td class="opt-name">5 — Native</td><td>Strict mimicry of Buildkite's existing primitives</td><td>Cleanest match; baseline reference</td></tr>
+        <tr><td class="opt-name">6 — Refined</td><td>V3 with a full lead-designer critique applied</td><td>Closer to production; still card-based</td></tr>
+        <tr class="production"><td class="accent">7 — Horizontal rows</td><td class="accent">Rows scale to N failures · action near its cue · 14px max</td><td class="accent">Production</td></tr>
+      </tbody>
+    </table>
+    <div class="footer">Build Header Triage View · Siray Li</div>
+  </div>
+</body>
+</html>

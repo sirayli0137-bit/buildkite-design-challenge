@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Five Turning Points — Build Header Triage View</title>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <style>
+    :root {
+      --zinc-50: #fafafa; --zinc-200: #e4e4e7; --zinc-400: #a1a1aa; --zinc-500: #71717a;
+      --zinc-700: #3f3f46; --zinc-900: #18181b; --red-700: #b91c1c;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: white; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; color: var(--zinc-900); }
+    .slide { width: 1280px; height: 720px; padding: 64px 80px; position: relative; background: white; display: flex; flex-direction: column; }
+    .deck-tag { position: absolute; top: 32px; left: 80px; font-size: 11px; color: var(--zinc-400); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+    .footer { position: absolute; bottom: 32px; right: 80px; font-size: 11px; color: var(--zinc-400); letter-spacing: 0.04em; }
+    h2 { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif; font-size: 40px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.15; margin: 0 0 8px 0; }
+    .muted { color: var(--zinc-500); font-size: 16px; line-height: 1.5; margin: 0 0 16px 0; }
+    .turning { padding: 12px 16px; border: 1px solid var(--zinc-200); border-radius: 6px; margin: 8px 0; font-size: 15px; line-height: 1.4; }
+    .turning .num { color: var(--red-700); font-weight: 700; margin-right: 12px; font-size: 18px; }
+    .turning strong { color: var(--zinc-900); font-weight: 600; }
+    .turning span.body { color: var(--zinc-700); }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <div class="deck-tag">Deck 3 / 4 — Exploration · Slide 4</div>
+    <h2>Five turning points</h2>
+    <p class="muted">Decisions where the iteration shifted direction.</p>
+    <div class="turning"><span class="num">1</span><strong>Why don't all step links look the same?</strong> <span class="body">Three patterns (chip/border, text+arrow, icon+name) became one (icon+name, no arrow, hover affordance).</span></div>
+    <div class="turning"><span class="num">2</span><strong>Why is the action far from the trigger?</strong> <span class="body">Preview fix top-right; disclosure expanded bottom-left. Diagonal eye-track. Moved trigger near the disclosure.</span></div>
+    <div class="turning"><span class="num">3</span><strong>Suggestion + AI explanation: two things or one?</strong> <span class="body">Same content at different lengths. Merged into one disclosure.</span></div>
+    <div class="turning"><span class="num">4</span><strong>Should AI be loud on the surface?</strong> <span class="body">Initially yes. Stripped back; AI source acknowledged inside the card only.</span></div>
+    <div class="turning"><span class="num">5</span><strong>Pipeline shape: strip or bar?</strong> <span class="body">Tried both visible. Redundant. Strip wins in expanded view; bar stays for collapsed Tier 1.</span></div>
+    <div class="footer">Build Header Triage View · Siray Li</div>
+  </div>
+</body>
+</html>

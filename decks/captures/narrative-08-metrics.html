@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Success metrics — Build Header Triage View</title>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <style>
+    :root { --zinc-50: #fafafa; --zinc-100: #f4f4f5; --zinc-200: #e4e4e7; --zinc-400: #a1a1aa; --zinc-500: #71717a; --zinc-700: #3f3f46; --zinc-900: #18181b; --red-700: #b91c1c; --green-700: #15803d; --blue-700: #1d4ed8; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: white; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; color: var(--zinc-900); }
+    .slide { width: 1280px; height: 720px; padding: 64px 80px; position: relative; background: white; display: flex; flex-direction: column; }
+    .deck-tag { position: absolute; top: 32px; left: 80px; font-size: 11px; color: var(--zinc-400); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+    .footer { position: absolute; bottom: 32px; right: 80px; font-size: 11px; color: var(--zinc-400); letter-spacing: 0.04em; }
+    h2 { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif; font-size: 36px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 8px 0; }
+    .lead { font-size: 16px; color: var(--zinc-500); margin: 0 0 24px 0; line-height: 1.4; }
+    .columns { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .col { padding: 18px 22px; border: 1px solid var(--zinc-200); border-radius: 8px; }
+    .col h3 { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 14px 0; }
+    .col.speed h3 { color: var(--blue-700); }
+    .col.quality h3 { color: var(--green-700); }
+    .metric { padding: 9px 0; border-bottom: 1px solid var(--zinc-100); }
+    .metric:last-child { border-bottom: 0; }
+    .metric .name { font-size: 13px; font-weight: 600; color: var(--zinc-900); margin-bottom: 3px; line-height: 1.35; }
+    .metric .name .new-tag { font-size: 9px; font-weight: 700; color: var(--red-700); letter-spacing: 0.06em; margin-left: 6px; vertical-align: middle; }
+    .metric .target { font-size: 11px; color: var(--zinc-500); line-height: 1.4; }
+    .metric .target .arrow { font-weight: 700; color: var(--green-700); }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <div class="deck-tag">Slide 8 — Success metrics</div>
+    <h2>How we'll know it worked</h2>
+    <p class="lead">Eight metrics. Four for speed of action. Four for quality of decision.</p>
+
+    <div class="columns">
+      <div class="col speed">
+        <h3>Speed of action</h3>
+        <div class="metric">
+          <div class="name">Time from expanding → first action</div>
+          <div class="target">Target <span class="arrow">↓</span> — measures whether the surface is legible</div>
+        </div>
+        <div class="metric">
+          <div class="name">Time from first action → failure resolved</div>
+          <div class="target">Target <span class="arrow">↓</span> — measures whether the action was the right one</div>
+        </div>
+        <div class="metric">
+          <div class="name">Failures resolved without leaving the build page</div>
+          <div class="target">Target <span class="arrow">↑</span> — fewer hops to logs and config</div>
+        </div>
+        <div class="metric">
+          <div class="name">Expansion → action conversion</div>
+          <div class="target">Target <span class="arrow">↑</span> — when users expand, they take an action</div>
+        </div>
+      </div>
+
+      <div class="col quality">
+        <h3>Quality of decision</h3>
+        <div class="metric">
+          <div class="name">Easy to understand the error<span class="new-tag">NEW</span></div>
+          <div class="target">Measured via task tests + surveys — user states the cause in under 5 seconds</div>
+        </div>
+        <div class="metric">
+          <div class="name">AI suggestion accept rate</div>
+          <div class="target">Target <span class="arrow">↑</span> — sanity check on suggestion quality</div>
+        </div>
+        <div class="metric">
+          <div class="name">Retry rate on non-flaky failures</div>
+          <div class="target">Target <span class="arrow">↓</span> — we don't want users guessing</div>
+        </div>
+        <div class="metric">
+          <div class="name">Accessibility audit pass rate</div>
+          <div class="target">Target — 100% on every release. No regressions.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">Build Header Triage View · Siray Li</div>
+  </div>
+</body>
+</html>

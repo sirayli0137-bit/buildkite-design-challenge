@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Refactor — Build Header Triage View</title>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <style>
+    :root { --zinc-50: #fafafa; --zinc-100: #f4f4f5; --zinc-200: #e4e4e7; --zinc-400: #a1a1aa; --zinc-500: #71717a; --zinc-700: #3f3f46; --zinc-900: #18181b; --red-700: #b91c1c; --green-700: #15803d; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: white; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; color: var(--zinc-900); }
+    .slide { width: 1280px; height: 720px; padding: 64px 80px; position: relative; background: white; display: flex; flex-direction: column; }
+    .deck-tag { position: absolute; top: 32px; left: 80px; font-size: 11px; color: var(--zinc-400); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+    .footer { position: absolute; bottom: 32px; right: 80px; font-size: 11px; color: var(--zinc-400); letter-spacing: 0.04em; }
+    h2 { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif; font-size: 36px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 8px 0; }
+    .lead { font-size: 16px; color: var(--zinc-500); margin: 0 0 18px 0; line-height: 1.4; }
+    .columns { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px; }
+    .col { padding: 14px 18px; border-radius: 8px; border: 1px solid var(--zinc-200); }
+    .col h3 { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 8px 0; }
+    .col.before h3 { color: var(--red-700); }
+    .col.after h3 { color: var(--green-700); }
+    pre { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; line-height: 1.5; margin: 0; color: var(--zinc-700); white-space: pre; overflow-x: auto; }
+    pre .keyword { color: var(--zinc-900); font-weight: 600; }
+    pre .comment { color: var(--zinc-400); font-style: italic; }
+    .summary { margin-top: 16px; padding: 14px 18px; background: var(--zinc-50); border-radius: 8px; font-size: 13px; line-height: 1.5; color: var(--zinc-700); }
+    .summary strong { color: var(--zinc-900); font-weight: 600; }
+    .summary ul { margin: 6px 0 0 0; padding-left: 20px; }
+    .summary li { margin: 3px 0; }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <div class="deck-tag">Slide 10 — Refactor under pressure</div>
+    <h2>String-matching got brittle. I refactored mid-iteration.</h2>
+    <p class="lead">Three places matched on strings to do what one typed table should do. Now new failure types plug in at one place.</p>
+
+    <div class="columns">
+      <div class="col before">
+        <h3>Before — three places to keep in sync</h3>
+<pre><span class="keyword">function</span> getSuggestion(step, job) {
+  <span class="keyword">if</span> (exit === 1 && isTest)
+    <span class="keyword">return</span> "Likely a CommonJS/ESM...";
+  <span class="keyword">if</span> (exit === 2 && isLint)
+    <span class="keyword">return</span> "ESLint found 12...";
+  <span class="comment">// ...</span>
+}
+
+<span class="comment">// V7FailureRow.tsx</span>
+<span class="keyword">const</span> aiExplanation = (() =&gt; {
+  <span class="keyword">if</span> (suggestion?.includes(<span class="keyword">"CommonJS"</span>))
+    <span class="keyword">return</span> "Your test suite imports...";
+  <span class="keyword">if</span> (suggestion?.includes(<span class="keyword">"ESLint"</span>))
+    <span class="keyword">return</span> "ESLint detected 12 errors...";
+  <span class="keyword">return null</span>;
+})();
+
+<span class="keyword">const</span> fixPreview = (() =&gt; {
+  <span class="keyword">if</span> (suggestion?.includes(<span class="keyword">"CommonJS"</span>))
+    <span class="keyword">return</span> { file: "src/auth.js", ... };
+  <span class="comment">// ...</span>
+})();</pre>
+      </div>
+
+      <div class="col after">
+        <h3>After — one typed table</h3>
+<pre><span class="keyword">type</span> FailurePattern = {
+  id: <span class="keyword">string</span>;
+  matches: (step, exit) =&gt; <span class="keyword">boolean</span>;
+  suggestion: <span class="keyword">string</span>;
+  explanation: <span class="keyword">string</span> | <span class="keyword">null</span>;
+  fix: { file; before; after } | <span class="keyword">null</span>;
+};
+
+<span class="keyword">const</span> failurePatterns: FailurePattern[] = [
+  { id: "commonjs-esm-mismatch",
+    matches: ..., suggestion, explanation, fix },
+  { id: "eslint-violations",
+    matches: ..., suggestion, explanation, fix },
+  { id: "oom-kill",
+    matches: (_, exit) =&gt; exit === 137,
+    ..., explanation: <span class="keyword">null</span>, fix: <span class="keyword">null</span> },
+];
+
+<span class="keyword">function</span> matchFailurePattern(step, job) {
+  <span class="keyword">const</span> exit = job?.exitCode ?? step?.exitCode;
+  <span class="keyword">return</span> failurePatterns.find(p =&gt; p.matches(step, exit)) ?? <span class="keyword">null</span>;
+}</pre>
+      </div>
+    </div>
+
+    <div class="summary">
+      <strong>Why this matters →</strong>
+      <ul>
+        <li><strong>Before:</strong> change a label in one place and two other places break silently</li>
+        <li><strong>After:</strong> one entry per failure type. Change a label and nothing breaks.</li>
+        <li><strong>Future:</strong> a real AI service plugs into the same table — same shape</li>
+      </ul>
+    </div>
+
+    <div class="footer">Build Header Triage View · Siray Li</div>
+  </div>
+</body>
+</html>

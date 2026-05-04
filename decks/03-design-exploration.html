@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design Exploration — Build Header Triage View</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/white.css">
+  <style>
+    :root {
+      --zinc-50: #fafafa; --zinc-200: #e4e4e7; --zinc-400: #a1a1aa; --zinc-500: #71717a;
+      --zinc-700: #3f3f46; --zinc-900: #18181b;
+      --red-500: #ef4444; --red-700: #b91c1c;
+      --amber-500: #f59e0b; --amber-700: #b45309;
+    }
+    .reveal { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; color: var(--zinc-900); font-size: 26px; }
+    .reveal h1, .reveal h2, .reveal h3 { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif; color: var(--zinc-900); font-weight: 700; text-transform: none; letter-spacing: -0.01em; line-height: 1.15; margin-bottom: 0.4em; }
+    .reveal h1 { font-size: 2.4em; }
+    .reveal h2 { font-size: 1.8em; }
+    .reveal h3 { font-size: 1.2em; color: var(--zinc-500); font-weight: 600; }
+    .reveal .slides section { text-align: left; padding: 0 1em; }
+    .reveal blockquote { border-left: 4px solid var(--zinc-200); padding-left: 1em; font-style: normal; color: var(--zinc-700); box-shadow: none; width: 100%; max-width: 900px; }
+    .reveal ul, .reveal ol { margin-left: 1.2em; }
+    .reveal li { margin: 0.4em 0; line-height: 1.4; }
+    .reveal table { margin: 0.5em 0; font-size: 0.78em; border-collapse: collapse; width: 100%; }
+    .reveal table th, .reveal table td { padding: 0.5em 0.75em; border-bottom: 1px solid var(--zinc-200); text-align: left; vertical-align: top; }
+    .reveal table th { background: var(--zinc-50); font-weight: 600; color: var(--zinc-700); font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.04em; }
+    .reveal code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--zinc-50); padding: 0.1em 0.4em; border-radius: 3px; border: 1px solid var(--zinc-200); font-size: 0.85em; }
+    .reveal .muted { color: var(--zinc-500); }
+    .reveal .strong { color: var(--zinc-900); font-weight: 600; }
+    .reveal .accent { color: var(--red-700); }
+    .reveal .footer { position: fixed; bottom: 1em; right: 1.5em; font-size: 0.55em; color: var(--zinc-400); letter-spacing: 0.04em; }
+    .reveal .deck-number { position: fixed; top: 1em; left: 1.5em; font-size: 0.55em; color: var(--zinc-400); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+    .reveal .turning {
+      padding: 0.5em 0.8em;
+      border: 1px solid var(--zinc-200);
+      border-radius: 6px;
+      margin: 0.5em 0;
+      font-size: 0.9em;
+    }
+    .reveal .turning .num { color: var(--red-700); font-weight: 700; margin-right: 0.6em; font-size: 1.1em; }
+    .reveal pre {
+      background: var(--zinc-50);
+      border: 1px solid var(--zinc-200);
+      border-radius: 6px;
+      padding: 0.7em 0.9em;
+      font-size: 0.7em;
+      line-height: 1.5;
+    }
+    .reveal pre code { background: transparent; border: none; padding: 0; font-size: 1em; }
+  </style>
+</head>
+<body>
+  <div class="deck-number">Deck 3 / 4 — Exploration</div>
+  <div class="footer">Build Header Triage View · Siray Li</div>
+  <div class="reveal">
+    <div class="slides">
+
+      <section>
+        <h3>Deck 3</h3>
+        <h1>Design Exploration</h1>
+        <p class="muted">From V2 to V7. Each option tested a question — not proposed a solution.</p>
+      </section>
+
+      <section>
+        <h2>Methodology</h2>
+        <ol>
+          <li>State the question the variant tests</li>
+          <li>Build it</li>
+          <li>Identify what works + what fails</li>
+          <li>Synthesise the next variant from what I keep + what I drop</li>
+        </ol>
+        <p style="margin-top: 1em;">The final architecture (V7) is the synthesis, not the first idea.</p>
+      </section>
+
+      <section>
+        <h2>Variants overview</h2>
+        <table>
+          <thead><tr><th>Option</th><th>Question it tested</th><th>Outcome</th></tr></thead>
+          <tbody>
+            <tr><td><strong>2 — Zoned</strong></td><td>Do background fills + uppercase section labels help non-experts?</td><td>Heavy visual weight; rejected</td></tr>
+            <tr><td><strong>3 — Sectioned</strong></td><td>Plain-language labels: "What failed / What it blocks / What to do"?</td><td>Strong frame, inconsistent affordances</td></tr>
+            <tr><td><strong>4 — Merged</strong></td><td>Combine V3's labels with V2's blast radius + flaky badge + Copy</td><td>Useful synthesis; still card-based</td></tr>
+            <tr><td><strong>5 — Native</strong></td><td>Strict mimicry of Buildkite's existing primitives</td><td>Cleanest match; baseline reference</td></tr>
+            <tr><td><strong>6 — Refined</strong></td><td>V3 with a full lead-designer critique applied</td><td>Closer to production; still card-based</td></tr>
+            <tr><td><strong class="accent">7 — Horizontal rows</strong></td><td><strong class="accent">Rows scale to N failures · action near its cue · 14px max</strong></td><td><strong class="accent">Production</strong></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Five turning points</h2>
+        <p class="muted">Decisions where the iteration shifted direction.</p>
+        <div class="turning"><span class="num">1</span><strong>Why don't all step links look the same?</strong> · Three patterns (chip/border, text+arrow, icon+name) became one (icon+name, no arrow, hover affordance)</div>
+        <div class="turning"><span class="num">2</span><strong>Why is the action far from the trigger?</strong> · Preview fix top-right; disclosure expanded bottom-left. Diagonal eye-track. Moved trigger near the disclosure.</div>
+        <div class="turning"><span class="num">3</span><strong>Suggestion + AI explanation: two things or one?</strong> · Same content at different lengths. Merged into one disclosure.</div>
+        <div class="turning"><span class="num">4</span><strong>Should AI be loud on the surface?</strong> · Initially yes (Sparkles + "Show more AI explanation" + "Preview AI fix"). Stripped back; AI source acknowledged inside the card only.</div>
+        <div class="turning"><span class="num">5</span><strong>Pipeline shape: strip or bar?</strong> · Tried both visible. Redundant. Strip wins in expanded view; bar stays for collapsed Tier 1.</div>
+      </section>
+
+      <section>
+        <h2>The pattern dispatch refactor</h2>
+        <p class="muted">Mid-iteration: three string-matching lookups had grown brittle.</p>
+<pre><code>function getSuggestion() { if (exit === 1 &amp;&amp; isTest) return "..."; ... }
+
+const aiExplanation = (() =&gt; {
+  if (suggestion?.includes("CommonJS")) return "...";
+  ...
+})();
+
+const fixPreview = (() =&gt; { ... if (suggestion?.includes("CommonJS")) ... })();</code></pre>
+        <p>Refactored to a typed pattern table:</p>
+<pre><code>const failurePatterns: FailurePattern[] = [
+  { id, matches: predicate, suggestion, explanation, fix },
+  ...
+];</code></pre>
+        <p style="margin-top: 0.5em;">One entry per pattern. Suggestion + explanation + fix coupled by typed identity, not string content.</p>
+      </section>
+
+      <section>
+        <h2>What this delivered</h2>
+        <ul>
+          <li><span class="strong">Five visual variants</span> before the right one</li>
+          <li><span class="strong">Five scenario variants</span> to pressure-test it</li>
+          <li><span class="strong">One refactor</span> that future-proofs the architecture</li>
+        </ul>
+        <p style="margin-top: 1em;">Most decisions came from rejecting alternatives, not from the first idea.</p>
+        <p class="muted" style="margin-top: 0.5em;">The variant switcher in the running app lets a reviewer click through the iteration history.</p>
+      </section>
+
+      <section>
+        <h3>Wrap</h3>
+        <h2>Iteration is how you find the answer.</h2>
+        <p class="muted">Most of what I'm proud of in V7 didn't exist in V2. It emerged from rejecting things.</p>
+        <p style="margin-top: 1.5em; color: var(--zinc-400); font-size: 0.8em;">→ Next deck: production design + future scenarios</p>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+  <script>
+    Reveal.initialize({ hash: true, controls: true, progress: true, slideNumber: 'c/t', transition: 'fade', transitionSpeed: 'fast' });
+  </script>
+</body>
+</html>

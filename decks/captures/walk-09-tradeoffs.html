@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trade-offs — Build Header Triage View</title>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <style>
+    :root { --zinc-50: #fafafa; --zinc-100: #f4f4f5; --zinc-200: #e4e4e7; --zinc-400: #a1a1aa; --zinc-500: #71717a; --zinc-700: #3f3f46; --zinc-900: #18181b; --green-700: #15803d; --amber-700: #b45309; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: white; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; color: var(--zinc-900); }
+    .slide { width: 1280px; height: 720px; padding: 64px 80px; position: relative; background: white; display: flex; flex-direction: column; }
+    .deck-tag { position: absolute; top: 32px; left: 80px; font-size: 11px; color: var(--zinc-400); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+    .footer { position: absolute; bottom: 32px; right: 80px; font-size: 11px; color: var(--zinc-400); letter-spacing: 0.04em; }
+    h2 { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif; font-size: 36px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 8px 0; }
+    .lead { font-size: 16px; color: var(--zinc-500); margin: 0 0 24px 0; line-height: 1.4; }
+    .columns { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .col { padding: 18px 22px; border: 1px solid var(--zinc-200); border-radius: 8px; }
+    .col h3 { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 12px 0; }
+    .col.priorities h3 { color: var(--green-700); }
+    .col.costs h3 { color: var(--amber-700); }
+    .item { padding: 8px 0; border-bottom: 1px solid var(--zinc-100); font-size: 13px; line-height: 1.5; color: var(--zinc-700); }
+    .item:last-child { border-bottom: 0; }
+    .item .name { color: var(--zinc-900); font-weight: 600; display: block; margin-bottom: 2px; }
+    .footer-note { margin-top: 20px; padding: 14px 18px; background: var(--zinc-50); border-radius: 8px; font-size: 13px; color: var(--zinc-700); line-height: 1.5; }
+    .footer-note strong { color: var(--zinc-900); font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <div class="deck-tag">Slide 9 — Trade-offs</div>
+    <h2>What I picked, and what I gave up to pick it</h2>
+    <p class="lead">Every choice has a cost. Here's what I paid for each one.</p>
+
+    <div class="columns">
+      <div class="col priorities">
+        <h3>What I picked</h3>
+        <div class="item">
+          <span class="name">Tight for the common case</span>
+          70% of failures are a single failure. A view that's tight for one beats a view that's spacious for five.
+        </div>
+        <div class="item">
+          <span class="name">Buttons sit next to what they act on</span>
+          Retry sits next to the flaky tag. Preview fix sits next to the suggestion. Where you look is where you act.
+        </div>
+        <div class="item">
+          <span class="name">Reused Buildkite styles</span>
+          Same Tailwind classes, status pips, button styles, type sizes as the rest of the codebase.
+        </div>
+        <div class="item">
+          <span class="name">Stacks for multiple failures</span>
+          Same row pattern, same parts. One failure or five — same layout.
+        </div>
+        <div class="item">
+          <span class="name">Refactored when it got messy</span>
+          Switched to a typed table when string-matching grew brittle. New failure types now plug in at one place.
+        </div>
+      </div>
+
+      <div class="col costs">
+        <h3>What it cost</h3>
+        <div class="item">
+          <span class="name">The numbers are mocked</span>
+          Flaky count, typical duration, cross-build count are all hardcoded. No real history API yet.
+        </div>
+        <div class="item">
+          <span class="name">The "AI" is faked</span>
+          Suggestions come from a typed table, not a real AI. The table is the contract for when a real AI plugs in.
+        </div>
+        <div class="item">
+          <span class="name">No real-user testing</span>
+          Three rounds of polish would have been worth one observation session with a Jordan and a Sam.
+        </div>
+        <div class="item">
+          <span class="name">Strip gets messy on long pipelines</span>
+          Demo has 6 steps. Real Buildkite pipelines have 15–30. The strip wraps at that size.
+        </div>
+        <div class="item">
+          <span class="name">A lot going on in amber</span>
+          Stuck, in-progress, flaky, blocked, AI Sparkles, cross-build banner. Icons and position keep them apart, but it's dense.
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-note"><strong>The point →</strong> Trade-offs are how you ship. The deferred items aren't gaps in the design — they're called out so the next person knows where the line is.</div>
+
+    <div class="footer">Build Header Triage View · Siray Li</div>
+  </div>
+</body>
+</html>

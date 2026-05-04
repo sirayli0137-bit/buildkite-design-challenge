@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Problems — Build Header Triage View</title>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <style>
+    :root { --zinc-50: #fafafa; --zinc-100: #f4f4f5; --zinc-200: #e4e4e7; --zinc-400: #a1a1aa; --zinc-500: #71717a; --zinc-700: #3f3f46; --zinc-900: #18181b; --red-700: #b91c1c; --blue-700: #1d4ed8; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: white; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; color: var(--zinc-900); }
+    .slide { width: 1280px; height: 720px; padding: 64px 80px; position: relative; background: white; display: flex; flex-direction: column; }
+    .deck-tag { position: absolute; top: 32px; left: 80px; font-size: 11px; color: var(--zinc-400); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+    .footer { position: absolute; bottom: 32px; right: 80px; font-size: 11px; color: var(--zinc-400); letter-spacing: 0.04em; }
+    h2 { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif; font-size: 36px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 8px 0; }
+    .lead { font-size: 16px; color: var(--zinc-500); margin: 0 0 28px 0; line-height: 1.4; }
+    .problems { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 20px; }
+    .problem { display: grid; grid-template-columns: 36px 1fr 110px; gap: 14px; padding: 14px 16px; border: 1px solid var(--zinc-200); border-radius: 8px; align-items: start; }
+    .problem .num { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif; font-size: 22px; font-weight: 700; color: var(--red-700); line-height: 1; }
+    .problem .body h3 { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif; font-size: 15px; font-weight: 700; margin: 0 0 4px 0; line-height: 1.25; color: var(--zinc-900); }
+    .problem .body p { font-size: 12px; color: var(--zinc-700); margin: 0; line-height: 1.45; }
+    .who { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--blue-700); background: #eff6ff; padding: 4px 8px; border-radius: 999px; text-align: center; align-self: center; }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <div class="deck-tag">Slide 5 — Problems</div>
+    <h2>The problems we're solving</h2>
+    <p class="lead">Six things that slow Jordan and Sam down when a build fails. Pulled straight from the journey maps.</p>
+
+    <div class="problems">
+      <div class="problem">
+        <div class="num">01</div>
+        <div class="body">
+          <h3>"I can't see what failed without clicking around."</h3>
+          <p>The build is red. The reason is several clicks deep.</p>
+        </div>
+        <div class="who">Jordan</div>
+      </div>
+
+      <div class="problem">
+        <div class="num">02</div>
+        <div class="body">
+          <h3>"I can't tell a flake from a real failure."</h3>
+          <p>Same red dot. Very different response.</p>
+        </div>
+        <div class="who">Jordan</div>
+      </div>
+
+      <div class="problem">
+        <div class="num">03</div>
+        <div class="body">
+          <h3>"Retry is buried."</h3>
+          <p>Even when I know it's a flake, I have to dig to retry it.</p>
+        </div>
+        <div class="who">Jordan + Sam</div>
+      </div>
+
+      <div class="problem">
+        <div class="num">04</div>
+        <div class="body">
+          <h3>"I don't know which steps are blocked."</h3>
+          <p>The failure stopped the pipeline. What else was waiting?</p>
+        </div>
+        <div class="who">Sam</div>
+      </div>
+
+      <div class="problem">
+        <div class="num">05</div>
+        <div class="body">
+          <h3>"Multiple failures overload me."</h3>
+          <p>Five failed steps. Which one do I look at first?</p>
+        </div>
+        <div class="who">Sam</div>
+      </div>
+
+      <div class="problem">
+        <div class="num">06</div>
+        <div class="body">
+          <h3>"Is this just me, or everyone?"</h3>
+          <p>The build page can't tell me if other builds are failing the same way.</p>
+        </div>
+        <div class="who">Sam</div>
+      </div>
+    </div>
+
+    <div class="footer">Build Header Triage View · Siray Li</div>
+  </div>
+</body>
+</html>

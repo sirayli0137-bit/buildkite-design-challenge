@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Journey map — Build Header Triage View</title>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <style>
+    :root { --zinc-50: #fafafa; --zinc-100: #f4f4f5; --zinc-200: #e4e4e7; --zinc-300: #d4d4d8; --zinc-400: #a1a1aa; --zinc-500: #71717a; --zinc-700: #3f3f46; --zinc-900: #18181b; --red-700: #b91c1c; --red-100: #fee2e2; --blue-700: #1d4ed8; --blue-50: #eff6ff; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: white; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; color: var(--zinc-900); }
+    .slide { width: 1280px; height: 720px; padding: 64px 80px; position: relative; background: white; display: flex; flex-direction: column; }
+    .deck-tag { position: absolute; top: 32px; left: 80px; font-size: 11px; color: var(--zinc-400); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+    .footer { position: absolute; bottom: 32px; right: 80px; font-size: 11px; color: var(--zinc-400); letter-spacing: 0.04em; }
+    h2 { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif; font-size: 36px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 8px 0; }
+    .lead { font-size: 16px; color: var(--zinc-500); margin: 0 0 22px 0; line-height: 1.4; }
+    .archetype-row { margin-bottom: 18px; }
+    .archetype-name { display: flex; align-items: baseline; gap: 12px; margin-bottom: 10px; }
+    .archetype-name h3 { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif; font-size: 17px; font-weight: 700; margin: 0; color: var(--zinc-900); }
+    .archetype-name .role { font-size: 12px; color: var(--zinc-500); }
+    .stages { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+    .stage { padding: 10px 12px; border: 1px solid var(--zinc-200); border-radius: 6px; background: white; }
+    .stage.pain { border-color: var(--red-700); background: var(--red-100); }
+    .stage .num { font-size: 9px; color: var(--zinc-400); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 4px; }
+    .stage.pain .num { color: var(--red-700); }
+    .stage .name { font-size: 12px; font-weight: 700; color: var(--zinc-900); margin: 0 0 4px 0; line-height: 1.3; }
+    .stage .body { font-size: 11px; color: var(--zinc-700); line-height: 1.4; }
+    .pain-callout { margin-top: 10px; padding: 10px 14px; background: var(--blue-50); border-radius: 6px; font-size: 12px; color: var(--zinc-700); line-height: 1.5; }
+    .pain-callout strong { color: var(--blue-700); font-weight: 700; }
+    .pain-callout em { font-style: normal; color: var(--zinc-900); font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <div class="deck-tag">Slide 4 — Journey map</div>
+    <h2>What Jordan and Sam actually go through</h2>
+    <p class="lead">Two journeys, step by step. The expanded view answers a different question for each.</p>
+
+    <div class="archetype-row">
+      <div class="archetype-name">
+        <h3>Jordan</h3>
+        <span class="role">on-call dev · reacts to pages · wants to act fast</span>
+      </div>
+      <div class="stages">
+        <div class="stage"><div class="num">01</div><div class="name">Pager fires</div><div class="body">"A build I care about just broke."</div></div>
+        <div class="stage"><div class="num">02</div><div class="name">Opens build page</div><div class="body">Lands on the URL from the page.</div></div>
+        <div class="stage pain"><div class="num">03 — pain</div><div class="name">Sees red — where?</div><div class="body">Status is failed. The reason is several clicks deep.</div></div>
+        <div class="stage"><div class="num">04</div><div class="name">Triages</div><div class="body">Decides: retry, fix, or escalate.</div></div>
+        <div class="stage"><div class="num">05</div><div class="name">Acts and ships</div><div class="body">Hits retry. Or applies a fix. Moves on.</div></div>
+      </div>
+      <div class="pain-callout"><strong>What we solve →</strong> Stage 3. <em>Failure rows surface what failed and why, the moment Jordan opens the build page.</em></div>
+    </div>
+
+    <div class="archetype-row">
+      <div class="archetype-name">
+        <h3>Sam</h3>
+        <span class="role">platform engineer · watches the system · wants the wider picture</span>
+      </div>
+      <div class="stages">
+        <div class="stage"><div class="num">01</div><div class="name">Dashboard alert</div><div class="body">Failure rate ticked up. Investigates.</div></div>
+        <div class="stage"><div class="num">02</div><div class="name">Opens a build</div><div class="body">Picks one of the failing builds.</div></div>
+        <div class="stage pain"><div class="num">03 — pain</div><div class="name">Wants the shape</div><div class="body">Multiple failures? Which steps are blocked?</div></div>
+        <div class="stage pain"><div class="num">04 — pain</div><div class="name">Just me, or everyone?</div><div class="body">No way to tell from the build page alone.</div></div>
+        <div class="stage"><div class="num">05</div><div class="name">Plans + communicates</div><div class="body">Pings the team. Files a follow-up.</div></div>
+      </div>
+      <div class="pain-callout"><strong>What we solve →</strong> Stages 3 and 4. <em>Stacked failure rows show the full shape. The cross-build banner answers "is it everyone?"</em></div>
+    </div>
+
+    <div class="footer">Build Header Triage View · Siray Li</div>
+  </div>
+</body>
+</html>

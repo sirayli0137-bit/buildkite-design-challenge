@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Strategy & PRD — Build Header Triage View</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/white.css">
+  <style>
+    :root {
+      --zinc-50: #fafafa;
+      --zinc-200: #e4e4e7;
+      --zinc-400: #a1a1aa;
+      --zinc-500: #71717a;
+      --zinc-700: #3f3f46;
+      --zinc-900: #18181b;
+      --red-500: #ef4444;
+      --red-700: #b91c1c;
+      --amber-500: #f59e0b;
+      --amber-700: #b45309;
+    }
+    .reveal {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+      color: var(--zinc-900);
+      font-size: 26px;
+    }
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+      color: var(--zinc-900);
+      font-weight: 700;
+      text-transform: none;
+      letter-spacing: -0.01em;
+      line-height: 1.15;
+      margin-bottom: 0.4em;
+    }
+    .reveal h1 { font-size: 2.4em; }
+    .reveal h2 { font-size: 1.8em; }
+    .reveal h3 { font-size: 1.2em; color: var(--zinc-500); font-weight: 600; }
+    .reveal .slides section { text-align: left; padding: 0 1em; }
+    .reveal .slides section.title { text-align: left; }
+    .reveal blockquote {
+      border-left: 4px solid var(--zinc-200);
+      padding-left: 1em;
+      font-style: normal;
+      color: var(--zinc-700);
+      box-shadow: none;
+      width: 100%;
+      max-width: 900px;
+    }
+    .reveal blockquote cite {
+      display: block;
+      margin-top: 0.5em;
+      font-size: 0.7em;
+      color: var(--zinc-500);
+      font-style: normal;
+    }
+    .reveal ul, .reveal ol { margin-left: 1.2em; }
+    .reveal li { margin: 0.4em 0; line-height: 1.4; }
+    .reveal li li { margin: 0.2em 0; font-size: 0.92em; color: var(--zinc-700); }
+    .reveal table {
+      margin: 0.5em 0;
+      font-size: 0.78em;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    .reveal table th, .reveal table td {
+      padding: 0.5em 0.75em;
+      border-bottom: 1px solid var(--zinc-200);
+      text-align: left;
+      vertical-align: top;
+    }
+    .reveal table th {
+      background: var(--zinc-50);
+      font-weight: 600;
+      color: var(--zinc-700);
+      font-size: 0.85em;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .reveal code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      background: var(--zinc-50);
+      padding: 0.1em 0.4em;
+      border-radius: 3px;
+      border: 1px solid var(--zinc-200);
+      font-size: 0.85em;
+    }
+    .reveal .muted { color: var(--zinc-500); }
+    .reveal .strong { color: var(--zinc-900); font-weight: 600; }
+    .reveal .accent { color: var(--red-700); }
+    .reveal .footer {
+      position: fixed;
+      bottom: 1em;
+      right: 1.5em;
+      font-size: 0.55em;
+      color: var(--zinc-400);
+      letter-spacing: 0.04em;
+    }
+    .reveal .principle {
+      display: flex;
+      gap: 0.6em;
+      margin: 0.4em 0;
+      align-items: flex-start;
+    }
+    .reveal .principle strong { color: var(--zinc-900); flex: 0 0 auto; min-width: 11em; }
+    .reveal .principle span { color: var(--zinc-700); }
+    .reveal .deck-number {
+      position: fixed;
+      top: 1em;
+      left: 1.5em;
+      font-size: 0.55em;
+      color: var(--zinc-400);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+  <div class="deck-number">Deck 1 / 4 — Strategy</div>
+  <div class="footer">Build Header Triage View · Siray Li</div>
+  <div class="reveal">
+    <div class="slides">
+
+      <section class="title">
+        <h3>Deck 1</h3>
+        <h1>Strategy &amp; PRD</h1>
+        <p class="muted">How a small component sits inside Buildkite's product story.</p>
+      </section>
+
+      <section>
+        <h2>Where Buildkite stands</h2>
+        <blockquote>
+          "Buildkite is the control plane for software delivery, while customers can choose where and how their build infrastructure runs."
+        </blockquote>
+        <ul>
+          <li>Hybrid architecture is the moat: enterprise-grade <span class="strong">control + scale + security</span></li>
+          <li>Strong with mature engineering teams</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>The expansion challenge</h2>
+        <blockquote>
+          "From powerful CI/CD for enterprises → To CI/CD that grows with you, from first project to global scale."
+        </blockquote>
+        <ul>
+          <li>Buildkite wants to expand into <span class="strong">SMB and individual developers</span></li>
+          <li>Currently feels oriented to platform engineers / DevOps experts</li>
+          <li>Down-market expansion ≠ removing power. It means <span class="strong">progressively revealing power as users mature</span></li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Why this component matters</h2>
+        <h3>A micro-observability surface</h3>
+        <p>The fastest path from "something broke" to "I know what broke and what it blocked."</p>
+        <p>Two strategic differentiators converge here:</p>
+        <ul>
+          <li><span class="strong">Observability</span> — why builds fail, which steps blocked downstream</li>
+          <li><span class="strong">Developer-first experience</span> — error explainability, accessible to product engineers</li>
+        </ul>
+        <p class="muted">Plus the natural entry point for AI-assisted debugging (Strategy §7.3).</p>
+      </section>
+
+      <section>
+        <h2>Three-tier architecture</h2>
+        <table>
+          <thead>
+            <tr><th>Tier</th><th>Surface</th><th>Read time</th><th>Purpose</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>Progress bar (collapsed)</td><td>~2s</td><td>At-a-glance health</td></tr>
+            <tr><td><span class="accent">2</span></td><td><span class="accent">Expanded header (this)</span></td><td><span class="accent">~10s</span></td><td><span class="accent">Triage: what broke, what's blocked</span></td></tr>
+            <tr><td>3</td><td>Step list + logs</td><td>Minutes</td><td>Deep investigation</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top: 1em;"><span class="strong">Tier 2 must be faster than scrolling down.</span> A summary layer, not a duplicate of the step list below.</p>
+      </section>
+
+      <section>
+        <h2>Six design principles</h2>
+        <p class="muted">Each one came back as a deciding vote during iteration.</p>
+        <div class="principle"><strong>1. Failure-first</strong><span>failure is the headline</span></div>
+        <div class="principle"><strong>2. Triage, not deep-dive</strong><span>logs are one click away</span></div>
+        <div class="principle"><strong>3. Blast radius clarity</strong><span>what's blocked, by name</span></div>
+        <div class="principle"><strong>4. Accessible to non-experts</strong><span>plain language + colour + text</span></div>
+        <div class="principle"><strong>5. Status-aware</strong><span>passed / running / failed each have their own framing</span></div>
+        <div class="principle"><strong>6. Compact and contained</strong><span>a header, not a dashboard</span></div>
+      </section>
+
+      <section>
+        <h2>How strategy translated to the work</h2>
+        <table>
+          <thead><tr><th>Strategy lever</th><th>What I built</th></tr></thead>
+          <tbody>
+            <tr><td>Developer-first experience</td><td>Plain-language suggestion line; AI source acknowledged but not loud</td></tr>
+            <tr><td>Observability differentiation</td><td>Pipeline strip + per-row Copy summary + structured failure data → cross-build aggregation</td></tr>
+            <tr><td>Start simple, scale infinitely</td><td>Same component handles 1 / 5 / stuck / verified — same primitives, different states</td></tr>
+            <tr><td>AI-assisted debugging</td><td>Pattern dispatch table is the integration contract</td></tr>
+            <tr><td>Security &amp; trust</td><td>Apply fix is a deliberate two-step gate with attribution</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="title">
+        <h3>Wrap</h3>
+        <h2>The PRD wasn't bureaucratic scaffolding.</h2>
+        <p class="muted">It was the constraint that made every design decision easier. When I had to choose between two options, the strategically-aligned one won.</p>
+        <p style="margin-top: 1.5em; color: var(--zinc-400); font-size: 0.8em;">→ Next deck: User journey + design rationale</p>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      controls: true,
+      progress: true,
+      slideNumber: 'c/t',
+      transition: 'fade',
+      transitionSpeed: 'fast',
+    });
+  </script>
+</body>
+</html>

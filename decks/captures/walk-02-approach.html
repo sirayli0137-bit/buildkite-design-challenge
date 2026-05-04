@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How I approached this — Build Header Triage View</title>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <style>
+    :root { --zinc-50: #fafafa; --zinc-100: #f4f4f5; --zinc-200: #e4e4e7; --zinc-400: #a1a1aa; --zinc-500: #71717a; --zinc-700: #3f3f46; --zinc-900: #18181b; --red-700: #b91c1c; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: white; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; color: var(--zinc-900); }
+    .slide { width: 1280px; height: 720px; padding: 64px 80px; position: relative; background: white; display: flex; flex-direction: column; }
+    .deck-tag { position: absolute; top: 32px; left: 80px; font-size: 11px; color: var(--zinc-400); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+    .footer { position: absolute; bottom: 32px; right: 80px; font-size: 11px; color: var(--zinc-400); letter-spacing: 0.04em; }
+    h2 { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif; font-size: 40px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 16px 0; }
+    .lead { font-size: 18px; color: var(--zinc-500); margin: 0 0 32px 0; line-height: 1.5; }
+    .flow { display: flex; align-items: stretch; gap: 8px; margin-top: 8px; }
+    .step { flex: 1; padding: 16px; background: var(--zinc-50); border: 1px solid var(--zinc-200); border-radius: 8px; display: flex; flex-direction: column; }
+    .step.production { background: white; border-color: var(--red-700); }
+    .step .num { font-size: 11px; color: var(--zinc-400); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 4px; }
+    .step.production .num { color: var(--red-700); }
+    .step .name { font-size: 16px; font-weight: 700; color: var(--zinc-900); margin: 0 0 6px 0; line-height: 1.2; }
+    .step .body { font-size: 12px; color: var(--zinc-700); line-height: 1.4; }
+    .arrow { display: flex; align-items: center; color: var(--zinc-300); font-size: 18px; padding: 0 2px; }
+    .principles-row { margin-top: 32px; padding: 16px 20px; border: 1px solid var(--zinc-200); border-radius: 8px; background: var(--zinc-50); }
+    .principles-row strong { display: block; font-size: 12px; color: var(--zinc-500); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .principles-row p { font-size: 14px; color: var(--zinc-700); margin: 0; line-height: 1.5; }
+    .principles-row .highlight { color: var(--zinc-900); font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <div class="deck-tag">Slide 2 — How I worked</div>
+    <h2>Each step narrowed the choice</h2>
+    <p class="lead">By the time I picked V7, most of the decisions had already been made — by the principles, not by taste.</p>
+
+    <div class="flow">
+      <div class="step">
+        <span class="num">01</span>
+        <span class="name">PRD</span>
+        <span class="body">Goals, users, principles</span>
+      </div>
+      <div class="arrow">›</div>
+      <div class="step">
+        <span class="num">02</span>
+        <span class="name">Journey</span>
+        <span class="body">Step-by-step map for Jordan + Sam</span>
+      </div>
+      <div class="arrow">›</div>
+      <div class="step">
+        <span class="num">03</span>
+        <span class="name">Explore</span>
+        <span class="body">6 variants, each testing one question</span>
+      </div>
+      <div class="arrow">›</div>
+      <div class="step">
+        <span class="num">04</span>
+        <span class="name">Critique</span>
+        <span class="body">Score each one against the principles</span>
+      </div>
+      <div class="arrow">›</div>
+      <div class="step">
+        <span class="num">05</span>
+        <span class="name">Tighten</span>
+        <span class="body">Refactor where iteration got messy</span>
+      </div>
+      <div class="arrow">›</div>
+      <div class="step production">
+        <span class="num">06</span>
+        <span class="name">V7</span>
+        <span class="body">Final design + 5 scenarios</span>
+      </div>
+    </div>
+
+    <div class="principles-row">
+      <strong>Why this matters</strong>
+      <p>When two options looked equal, I asked: <span class="highlight">which one does a principle pick?</span> Almost every decision in this deck has a principle behind it. The framework decides when taste alone can't.</p>
+    </div>
+
+    <div class="footer">Build Header Triage View · Siray Li</div>
+  </div>
+</body>
+</html>

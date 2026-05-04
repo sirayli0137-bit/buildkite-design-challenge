@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PR review — Build Header Triage View</title>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <style>
+    :root { --zinc-50: #fafafa; --zinc-100: #f4f4f5; --zinc-200: #e4e4e7; --zinc-400: #a1a1aa; --zinc-500: #71717a; --zinc-700: #3f3f46; --zinc-900: #18181b; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: white; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; color: var(--zinc-900); }
+    .slide { width: 1280px; height: 720px; padding: 64px 80px; position: relative; background: white; display: flex; flex-direction: column; }
+    .deck-tag { position: absolute; top: 32px; left: 80px; font-size: 11px; color: var(--zinc-400); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+    .footer { position: absolute; bottom: 32px; right: 80px; font-size: 11px; color: var(--zinc-400); letter-spacing: 0.04em; }
+    h2 { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif; font-size: 36px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 8px 0; }
+    .lead { font-size: 16px; color: var(--zinc-500); margin: 0 0 24px 0; line-height: 1.4; }
+    .columns { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .col { padding: 18px 22px; border: 1px solid var(--zinc-200); border-radius: 8px; }
+    .col h3 { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 12px 0; color: var(--zinc-700); }
+    .file-tree { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; line-height: 1.6; color: var(--zinc-700); white-space: pre; }
+    .file-tree .name { color: var(--zinc-900); font-weight: 600; }
+    .file-tree .comment { color: var(--zinc-400); }
+    .doc-list { list-style: none; padding: 0; margin: 0; }
+    .doc-list li { padding: 8px 0; border-bottom: 1px solid var(--zinc-100); font-size: 13px; line-height: 1.5; color: var(--zinc-700); }
+    .doc-list li:last-child { border-bottom: 0; }
+    .doc-list code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--zinc-100); padding: 0.1em 0.4em; border-radius: 3px; font-size: 11px; color: var(--zinc-900); }
+    .doc-list .name { color: var(--zinc-900); font-weight: 600; display: block; margin-bottom: 2px; }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <div class="deck-tag">Slide 11 — How a teammate would review this</div>
+    <h2>What a teammate would see when they open the PR</h2>
+    <p class="lead">Three things make a PR easy to review: clear structure, written reasoning, and a way to try it.</p>
+
+    <div class="columns">
+      <div class="col">
+        <h3>Clear structure</h3>
+<div class="file-tree">src/
+  components/
+    <span class="name">ExpandedTriageView.tsx</span>      <span class="comment">all variants + helpers</span>
+    BuildHeader.tsx              <span class="comment">unchanged shell</span>
+  data/
+    <span class="name">mockBuildSteps.ts</span>           <span class="comment">canonical + scenarios</span>
+  lib/
+    buildStatus.ts               <span class="comment">unchanged</span>
+  types/
+    build.ts                     <span class="comment">unchanged</span>
+
+PRD.md                           <span class="comment">strategy + product</span>
+JOURNEY_MAP.md                   <span class="comment">two archetypes</span>
+SUBMISSION.md                    <span class="comment">overview · architecture</span>
+DECISION_LOG.md                  <span class="comment">15 decisions explained</span>
+decks/                           <span class="comment">4 reveal.js decks · HTML</span>
+</div>
+      </div>
+
+      <div class="col">
+        <h3>Written reasoning</h3>
+        <ul class="doc-list">
+          <li>
+            <span class="name">SUBMISSION.md</span>
+            Final design, scenarios, architecture, accessibility, trade-offs. Read this first.
+          </li>
+          <li>
+            <span class="name">DECISION_LOG.md</span>
+            15 decisions in "I considered → I chose → why" form. Most came from rejecting other options.
+          </li>
+          <li>
+            <span class="name">Inline code comments</span>
+            Only where the code can't explain itself: <code>// suppressed when a higher-scope signal already covers it</code>. Comments say "why," code says "what."
+          </li>
+        </ul>
+
+        <h3 style="margin-top: 18px;">Try it yourself</h3>
+        <ul class="doc-list">
+          <li>
+            <span class="name">Variant switcher in the running app</span>
+            Run <code>npm run dev</code>. Click <code>Option 7.1</code> through <code>7.5</code>. You can see every scenario without my walkthrough.
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer">Build Header Triage View · Siray Li</div>
+  </div>
+</body>
+</html>

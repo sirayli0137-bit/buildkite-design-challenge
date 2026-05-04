@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IA + layout options — Build Header Triage View</title>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <style>
+    :root { --zinc-50: #fafafa; --zinc-100: #f4f4f5; --zinc-200: #e4e4e7; --zinc-300: #d4d4d8; --zinc-400: #a1a1aa; --zinc-500: #71717a; --zinc-700: #3f3f46; --zinc-900: #18181b; --red-700: #b91c1c; --green-700: #15803d; --green-50: #f0fdf4; --green-200: #bbf7d0; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: white; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif; color: var(--zinc-900); }
+    .slide { width: 1280px; height: 720px; padding: 64px 80px; position: relative; background: white; display: flex; flex-direction: column; }
+    .deck-tag { position: absolute; top: 32px; left: 80px; font-size: 11px; color: var(--zinc-400); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+    .footer { position: absolute; bottom: 32px; right: 80px; font-size: 11px; color: var(--zinc-400); letter-spacing: 0.04em; }
+    h2 { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif; font-size: 32px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 6px 0; }
+    .lead { font-size: 15px; color: var(--zinc-500); margin: 0 0 18px 0; line-height: 1.4; }
+    .section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--zinc-500); margin: 0 0 8px 0; }
+    .tiers { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 4px; }
+    .tier { padding: 10px 14px; border: 1px solid var(--zinc-200); border-radius: 6px; background: var(--zinc-50); }
+    .tier.picked { background: var(--green-50); border-color: var(--green-200); }
+    .tier .tag { font-size: 10px; font-weight: 700; color: var(--zinc-400); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 4px; }
+    .tier.picked .tag { color: var(--green-700); }
+    .tier .name { font-size: 13px; font-weight: 700; color: var(--zinc-900); margin: 0 0 3px 0; line-height: 1.25; }
+    .tier .body { font-size: 11px; color: var(--zinc-700); line-height: 1.4; }
+    .rule { margin: 10px 0 18px 0; padding: 8px 14px; background: var(--zinc-50); border-radius: 6px; font-size: 12px; color: var(--zinc-700); }
+    .rule strong { color: var(--zinc-900); font-weight: 700; }
+    .options { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+    .opt { padding: 10px 12px; border: 1px solid var(--zinc-200); border-radius: 6px; }
+    .opt.picked { border-color: var(--green-700); background: var(--green-50); }
+    .opt .num { font-size: 10px; font-weight: 700; color: var(--zinc-400); letter-spacing: 0.05em; margin-bottom: 4px; }
+    .opt.picked .num { color: var(--green-700); }
+    .opt .name { font-size: 12px; font-weight: 700; color: var(--zinc-900); margin: 0 0 4px 0; line-height: 1.3; }
+    .opt .verdict { font-size: 11px; color: var(--zinc-700); line-height: 1.4; }
+    .opt.picked .verdict { color: var(--zinc-900); font-weight: 600; }
+    .opt .picked-tag { font-size: 9px; color: var(--green-700); font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-top: 4px; }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <div class="deck-tag">Slide 9 — Information architecture + layout</div>
+    <h2>Where things live, and what shape they take</h2>
+    <p class="lead">Before drawing anything, I split the build page into three layers, then evaluated layouts for the middle one.</p>
+
+    <div class="section-label">Three-tier information architecture</div>
+    <div class="tiers">
+      <div class="tier">
+        <div class="tag">Tier 1</div>
+        <div class="name">Collapsed bar</div>
+        <div class="body">Status, name, time. The "what's the headline" layer.</div>
+      </div>
+      <div class="tier picked">
+        <div class="tag">Tier 2 — what I built</div>
+        <div class="name">Expanded panel</div>
+        <div class="body">What failed. What's blocked. What to do. The summary layer.</div>
+      </div>
+      <div class="tier">
+        <div class="tag">Tier 3</div>
+        <div class="name">Step list + logs</div>
+        <div class="body">The full detail. Source of truth.</div>
+      </div>
+    </div>
+
+    <div class="rule"><strong>The rule →</strong> each tier has its own job. Tier 2 is a summary, never a copy of Tier 3. This is the rule that later kills inline log previews.</div>
+
+    <div class="section-label">Five layouts I evaluated for Tier 2</div>
+    <div class="options">
+      <div class="opt">
+        <div class="num">01</div>
+        <div class="name">Vertical stack</div>
+        <div class="verdict">Tight at 1 failure. Awkward at 5.</div>
+      </div>
+      <div class="opt picked">
+        <div class="num">02</div>
+        <div class="name">Horizontal rows</div>
+        <div class="verdict">Same pattern at 1 or 5. Stacks naturally.</div>
+        <div class="picked-tag">→ V7 production</div>
+      </div>
+      <div class="opt">
+        <div class="num">03</div>
+        <div class="name">Split panel</div>
+        <div class="verdict">Wastes space when only 1 failure.</div>
+      </div>
+      <div class="opt">
+        <div class="num">04</div>
+        <div class="name">Card grid</div>
+        <div class="verdict">Too much chrome around small content.</div>
+      </div>
+      <div class="opt">
+        <div class="num">05</div>
+        <div class="name">Condensed bar</div>
+        <div class="verdict">Not enough room for context.</div>
+      </div>
+    </div>
+
+    <div class="footer">Build Header Triage View · Siray Li</div>
+  </div>
+</body>
+</html>
